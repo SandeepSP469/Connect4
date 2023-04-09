@@ -2,16 +2,23 @@
 #include <stdlib.h>
 using namespace std;
 
-void PrintLogo() { cout << "COnnect"; }
+void Title() { 
+    cout << " ############################# \n";
+    cout << endl;
+    cout << "           WELCOME  \n";
+    cout << "             TO \n";
+    cout << "          CONNECT-4 \n";
+    cout << endl;
+    cout << " ############################# \n";
+}
 
-void WelcomeScreen() {
+void Rules() {
 
-    cout
-        << "\n\nHow To Play:-\n\n "
-        << "1. Game will always start with player-1 i.e. Red(R)\n2. In Each turn "
-        "choose the column number in Which you want to drop the Token.\n3. "
-        "Rows will be filled from bottom to top in every column.\n\n\n";
-
+    cout << "Instructions :\n";
+    cout << "1) Game will always start with player-1 i.e. Red(R) \n";
+    cout << "2) In Each turn choose the column number in Which you want to drop the ball \n";
+    cout << "3) Rows will be filled from bottom to top in every column \n";
+    cout << "4) A player wins if he/she is able to connect 4 dots horizontally, vertically or diagonally \n";
     cout << "\n\n";
 };
 
@@ -49,10 +56,10 @@ void PrintBoard(char board[8][7]) {
     cout << "\n";
 }
 
-bool EnterRedToken(int col, char board[8][7]) {
+bool RedInput(int col, char board[8][7]) {
     col--;
     if (board[0][col] != 'O') {
-        cout << "This Column is Full. Please Select Another.\n";
+        cout << "The column is filled. Please enter another column.\n";
         return true;
     }
     else {
@@ -66,10 +73,10 @@ bool EnterRedToken(int col, char board[8][7]) {
     }
 };
 
-bool EnterBlueToken(int col, char board[8][7]) {
+bool BlueInput(int col, char board[8][7]) {
     col--;
     if (board[0][col] != 'O') {
-        cout << "\nThis column is full. Please Select another.\n";
+        cout << "\nThe column is filled. Please enter another column.\n";
         return true;
     }
     else {
@@ -88,18 +95,17 @@ bool StartGame() {
     char input;
     cin >> input;
     if (input == 'N') {
-        cout << "\n***********************************  THANKS FOR PLAYING "
-            "*********************************************\n\n";
+        cout << "\n#########################  THANKS FOR PLAYING  #########################" "\n\n";
         return false;
     }
     else if (input != 'Y') {
-        cout << "\nPlease Enter correct input \n\n";
+        cout << "\nPlease Enter a valid input \n\n";
         StartGame();
     }
     else {
         return true;
     }
-};
+}
 
 bool CheckForWin(char Player, char board[8][7]) {
     bool win = false;
@@ -137,33 +143,29 @@ bool CheckForWin(char Player, char board[8][7]) {
 };
 
 int main() {
-    PrintLogo();
-    WelcomeScreen();
+    Title();
+    Rules();
     char board[8][7];
     InitializeBoard(board);
-
     bool GameEnds = false;
     bool RedTurn = true;
     bool BlueTurn = false;
-
     if (!StartGame()) {
         return 0;
     }
-
     while (!GameEnds) {
-
         if (RedTurn) {
             PrintBoard(board);
-            cout << "Player - 1 (RED)\n";
-            cout << "RED !!!! Enter Column Number to Drop your Token :  ";
+            cout << "Player - 1\n";
+            cout << "Enter Column Number to drop the ball:  ";
 
             int r;
             cin >> r;
-            RedTurn = EnterRedToken(r, board);
+            RedTurn = RedInput(r, board);
             bool won = CheckForWin('R', board);
             if (won) {
                 GameEnds = true;
-                cout << "\nPlayer - 1 (Red) Won the Game!!!\n\n";
+                cout << "\n Player-1 Won the Game!!!\n\n";
                 PrintBoard(board);
                 continue;
             }
@@ -171,19 +173,17 @@ int main() {
             if (RedTurn)
                 continue;
         }
-
         if (BlueTurn) {
             PrintBoard(board);
-            cout << "Player - 2 (BLUE)\n";
-            cout << "Blue !!! Enter Column Number to Drop your Token:  ";
-
+            cout << "Player - 2\n";
+            cout << "Enter Column Number to drop the ball:  ";
             int b;
             cin >> b;
-            BlueTurn = EnterBlueToken(b, board);
+            BlueTurn = BlueInput(b, board);
             bool won = CheckForWin('B', board);
             if (won) {
                 GameEnds = true;
-                cout << "\nPlayer - 2 (Blue) Won the Game!!!\n\n";
+                cout << "\nPlayer - 2 Won the Game!!!\n\n";
                 PrintBoard(board);
                 continue;
             }
